@@ -123,7 +123,8 @@ public class IceUdpDtlsLink
                             new RawPacket(rcvPacket.getData(), rcvPacket
                                 .getOffset(), rcvPacket.getLength());
 
-                        raw = transformer.reverseTransform(raw);
+                        raw = transformer.reverseTransform(new RawPacket[] { raw })[0];
+                        
                         // Check for app data
                         if (raw == null)
                             continue;
@@ -168,7 +169,7 @@ public class IceUdpDtlsLink
         rawPacket.setBuffer(packetData);
         rawPacket.setLength(packetData.length);
 
-        transformer.transform(rawPacket);
+        transformer.transform(new RawPacket[] { rawPacket });
     }
 
     private static synchronized int generateDebugId()
